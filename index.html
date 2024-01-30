@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI mérő</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <style>
+        input{
+            display: flex;
+            margin-bottom: 10px;
+            width: 250px;
+            background-color: rgb(32, 41, 56);
+            border-color: rgb(59, 130, 246);
+            border-radius: 5px;
+            height: 40px;
+            color: white;
+            align-items: center;
+        }
+        button{
+            margin: 5px;
+        }
+        body{
+            background-color: rgb(24, 31, 47);
+            color: white;
+        }
+        #keret{
+            margin: auto;
+            margin-top: 40px;
+            text-align: center;
+            background-color: rgb(32, 41, 56);
+            max-width: 300px;
+            border-radius: 5px;
+            max-height: 600px;
+            box-shadow: black 20px inset;
+            padding-bottom: 30px;
+        }
+        h1{
+            padding-top: 10px;
+            padding-bottom: 15px;
+        }
+        #szamlal{
+            border-color: rgb(59, 130, 246);
+            border-radius: 5px;
+        }
+        #torol{
+            border-color: red;
+            border-radius: 5px;
+        }
+        button{
+            background-color: rgb(32, 41, 56);
+            color: white;
+        }
+        #index{
+            margin-top: 30px;
+        }
+        #disz{
+            height: 80px;
+            max-width: 250px;
+            border-radius: 5px;
+            text-align: center;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        fieldset{
+            width: 270px;
+            padding: 10px;
+        }
+        legend{
+            padding-left: 4px;
+	        padding-right: 4px;
+            size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div id="keret" class="container box-shadow">
+        <h1>BMI Calculator</h1>
+        <form action="">
+            <fieldset id="felso">
+                <legend id="suly"></legend>
+                <input type="number" id="tomeg" placeholder="Testtömeg (kg)" onclick="suly()">
+            </fieldset>
+            <fieldset id="also">
+                <legend id="magas"></legend>
+                <input type="number" id="magassag" placeholder="Magasság (cm)" onclick="magas()">
+            </fieldset>
+        </form>
+        <button id="szamlal" onclick="index()">Kiszámolás</button>
+        <button id="torol" onclick="tisztit()">Tisztítás</button>
+        <p id="index"></p>
+        <p id="tipus"></p>
+        <div id="disz"></div>
+    </div>
+    
+    <script>
+        function suly() {
+            document.getElementById("suly").innerHTML="Testtömeg (kg)";
+            document.getElementById("suly").style.color="rgb(59, 130, 246)";
+            document.getElementById("tomeg").placeholder=" ";
+            document.getElementById("tomeg").style.border="none";
+            document.getElementById("tomeg").style.fontWeight="bolder";
+            document.getElementById("felso").style.border="1px solid rgb(59, 130, 246)";
+            document.getElementById("felso").style.borderRadius="15px";
+            document.getElementById("felso").style.marginBottom="15px";
+        }
+        function magas(){
+            document.getElementById("magas").innerHTML="Magasság (cm)";
+            document.getElementById("magas").style.color="rgb(59, 130, 246)";
+            document.getElementById("magassag").placeholder=" ";
+            document.getElementById("magassag").style.border="none";
+            document.getElementById("magassag").style.fontWeight="bolder";
+            document.getElementById("also").style.border="1px solid rgb(59, 130, 246)";
+            document.getElementById("also").style.borderRadius="15px";
+            document.getElementById("also").style.marginBottom="15px";
+        }
+        if(document.getElementById("tomeg").value>0 && document.getElementById("magassag").value>0){
+            document.getElementById("szamlal").style.backgroundColor="rgb(59, 130, 246)";
+        }
+        function index(){
+            let tomeg=+document.getElementById('tomeg').value;
+            if(!tomeg || tomeg<1) return;
+            console.log(typeof tomeg);
+            console.log(tomeg);
+            let magassag=+(document.getElementById("magassag").value/100);
+            if(!magassag || magassag<1) return;
+            console.log(typeof magassag);
+            console.log(magassag);
+            let bmi=tomeg/(magassag*magassag);
+            console.log(bmi);
+            if(bmi<18.5){
+                document.getElementById("index").innerHTML=bmi;
+                document.getElementById("tipus").innerHTML="Sovány vagy! 😥";
+                document.getElementById("disz").style.backgroundColor="rgb(150, 180, 218)";
+            }
+            if(bmi>=18.5 && bmi<25){
+                document.getElementById("index").innerHTML=bmi;
+                document.getElementById("tipus").innerHTML="Egészséges a testsúlyod! 😍";
+                document.getElementById("disz").style.backgroundColor="rgb(146, 198, 162)";
+            }
+            if(bmi>=25 && bmi<30){
+                document.getElementById("index").innerHTML=bmi;
+                document.getElementById("tipus").innerHTML="Kicsit túlsúlyos vagy! 😐"
+                document.getElementById("disz").style.backgroundColor="rgb(254, 211, 70)";
+            }
+            if(bmi<35 && bmi>=30){
+                document.getElementById("index").innerHTML=bmi;
+                document.getElementById("tipus").innerHTML="El vagy hízva! 😟";
+                document.getElementById("disz").style.backgroundColor="rgb(227, 151, 93)";
+            }
+            if (bmi>35){
+                document.getElementById("index").innerHTML=bmi;
+                document.getElementById("tipus").innerHTML="Túlságosan el vagy hízva! 😨"
+                document.getElementById("disz").style.backgroundColor="rgb(212, 92, 91)";
+            }
+        }
+       
+        function tisztit(){
+            document.getElementById("suly").innerHTML=" ";
+            document.getElementById("tomeg").value=" ";
+            document.getElementById("tomeg").style.border="1px solid rgb(59, 130, 246)";
+            document.getElementById("tomeg").style.borderRadius="5px";
+            document.getElementById("tomeg").placeholder="Testtömeg (kg)";
+
+            document.getElementById("magas").innerHTML=" ";
+            document.getElementById("magassag").value=" ";
+            document.getElementById("magassag").style.border="1px solid rgb(59, 130, 246)";
+            document.getElementById("magassag").style.borderRadius="5px";
+            document.getElementById("magassag").placeholder="Magasság (cm)";
+            
+            document.getElementById("index").innerHTML=" ";
+            document.getElementById("tipus").innerHTML=" ";
+            document.getElementById("disz").style.backgroundColor="rgb(32, 41, 56)";
+
+            document.getElementById("felso").style.border="none";
+            document.getElementById("felso").style.marginBottom=" ";
+            document.getElementById("also").style.border="none";
+            document.getElementById("also").style.marginBottom=" ";
+        }
+    </script>
+    
+</body>
+</html>
